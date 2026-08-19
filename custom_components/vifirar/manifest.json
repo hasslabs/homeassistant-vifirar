@@ -1,12 +1,14 @@
 {
   "domain": "vifirar",
   "name": "Vi firar",
-  "codeowners": ["@hasslabs"],
+  "codeowners": [
+    "@hasslabs"
+  ],
   "config_flow": true,
   "documentation": "https://github.com/hasslabs/homeassistant-vifirar",
   "integration_type": "service",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/hasslabs/homeassistant-vifirar/issues",
   "requirements": [],
-  "version": "1.1.0"
+  "version": "1.1.1"
 }

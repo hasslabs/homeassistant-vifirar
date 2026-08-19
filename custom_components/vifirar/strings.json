@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Koppla din Vi firar-sajt",
-        "description": "Adressen till din sajt (t.ex. https://karl-och-sara.vifirar.se) och API-nyckeln från Inställningar → Home Assistant.",
+        "description": "Adressen till din sajt (t.ex. {exempel}) och API-nyckeln från Inställningar → Home Assistant.",
         "data": {
           "url": "Sajtens adress",
           "api_key": "API-nyckel"

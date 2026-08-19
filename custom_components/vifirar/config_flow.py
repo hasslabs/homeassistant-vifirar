@@ -35,6 +35,9 @@ REAUTH_SCHEMA = vol.Schema({vol.Required(CONF_API_KEY): str})
 
 TIMEOUT_SECONDS = 15
 
+# Visas i formularets beskrivning via description_placeholders (se async_step_user).
+EXEMPEL_ADRESS = "https://karl-och-sara.vifirar.se"
+
 
 def _normalize_url(raw: str) -> tuple[str, str | None]:
     """Returnerar (url, felkod). http:// avvisas, allt annat får https:// framför sig."""
@@ -90,7 +93,14 @@ class VifirarConfigFlow(ConfigFlow, domain=DOMAIN):
                         title=info.get("title") or url,
                         data={CONF_URL: url, CONF_API_KEY: api_key},
                     )
-        return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA, errors=errors)
+        # hassfest tillater inte URL:er i sprakfilerna - exemplet skickas darfor in som en
+        # placeholder i stallet for att sta i strangen.
+        return self.async_show_form(
+            step_id="user",
+            data_schema=DATA_SCHEMA,
+            errors=errors,
+            description_placeholders={"exempel": EXEMPEL_ADRESS},
+        )
 
     async def async_step_reauth(self, entry_data: dict[str, Any]) -> ConfigFlowResult:
         """Nyckeln slutade gälla. Adressen behålls; bara nyckeln ska skrivas om."""

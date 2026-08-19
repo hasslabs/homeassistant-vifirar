@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Connect your Vi firar site",
-        "description": "Your site address (e.g. https://karl-och-sara.vifirar.se) and the API key from Settings → Home Assistant.",
+        "description": "Your site address (e.g. {exempel}) and the API key from Settings → Home Assistant.",
         "data": {
           "url": "Site address",
           "api_key": "API key"
