@@ -1,0 +1,29 @@
+# HACS installerar den senaste TAGGADE releasen. Utan en release visar HACS bara "main" och
+# uppdateringar syns aldrig som uppdateringar - därför skapas releasen automatiskt när en tagg
+# pushas, med versionen ur manifest.json som namn.
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Kontrollera att taggen matchar manifest.json
+        run: |
+          taggad="${GITHUB_REF_NAME#v}"
+          i_manifest=$(python -c "import json;print(json.load(open('custom_components/vifirar/manifest.json'))['version'])")
+          if [ "$taggad" != "$i_manifest" ]; then
+            echo "Taggen $GITHUB_REF_NAME sager $taggad men manifest.json sager $i_manifest" >&2
+            exit 1
+          fi
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true

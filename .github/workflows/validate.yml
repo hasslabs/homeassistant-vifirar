@@ -1,0 +1,34 @@
+# Två granskningar, båda de som HACS och Home Assistant själva kör. De ligger här för att ett fel i
+# manifest.json annars upptäcks först när någon försöker installera integrationen - och då är det
+# användaren som hittar det.
+name: Validering
+
+on:
+  push:
+  pull_request:
+  schedule:
+    # En gång i veckan: hassfest och HACS ändrar sina krav över tid, och en integration som var
+    # godkänd i februari kan vara underkänd i maj utan att en rad kod ändrats.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  hassfest:
+    name: hassfest (Home Assistants egen manifestgranskning)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: home-assistant/actions/hassfest@master
+
+  hacs:
+    name: HACS
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hacs/action@main
+        with:
+          category: integration
+          # Brands-kontrollen kräver att ikonen ligger i home-assistant/brands, vilket bara behövs
+          # för HACS default-butik. Repot installeras som custom repository - ta bort raden den dag
+          # integrationen skickas in till default.
+          ignore: brands

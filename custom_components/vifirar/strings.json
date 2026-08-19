@@ -1,0 +1,30 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Koppla din Vi firar-sajt",
+        "description": "Adressen till din sajt (t.ex. https://karl-och-sara.vifirar.se) och API-nyckeln från Inställningar → Home Assistant.",
+        "data": {
+          "url": "Sajtens adress",
+          "api_key": "API-nyckel"
+        }
+      },
+      "reauth_confirm": {
+        "title": "API-nyckeln behöver förnyas",
+        "description": "Nyckeln till {url} gäller inte längre. Skapa en ny under Inställningar → Home Assistant på sajten och klistra in den här - sensorerna och dina automationer behålls.",
+        "data": {
+          "api_key": "Ny API-nyckel"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kunde inte nå sajten - kontrollera adressen.",
+      "invalid_auth": "Fel API-nyckel - generera en ny under Inställningar → Home Assistant.",
+      "insecure_url": "Använd https:// - API-nyckeln skickas som Bearer-token och blir läsbar i klartext över http://."
+    },
+    "abort": {
+      "already_configured": "Sajten är redan tillagd.",
+      "reauth_successful": "Nyckeln är uppdaterad."
+    }
+  }
+}
