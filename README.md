@@ -69,6 +69,15 @@ Sensorerna pollas var 5:e minut. Vill du ha omedelbara notiser (push när någon
 du med sajtens **webhooks** (Inställningar → Webhooks) mot en webhook-trigger i Home Assistant -
 en färdig guide med exempel-YAML finns i sajtens Home Assistant-sektion.
 
+## Ikonen
+
+Home Assistant och HACS hämtar aldrig ikonen ur integrationen - de läser
+`brands.home-assistant.io/_/vifirar/icon.png`. Bilderna i `custom_components/vifirar/brand/` är
+därför två saker: det som skickats in till
+[home-assistant/brands](https://github.com/home-assistant/brands), och ett spår i repot av exakt
+vilka filer som skickades. De byggs ur sajtens egna ikoner med `node scripts/ha-brand.mjs` i
+plattformsrepot.
+
 ## Frågor och fel
 
 Skriv till oss via [vifirar.se/kontakt](https://vifirar.se/kontakt?amne=fel) - eller öppna ett
