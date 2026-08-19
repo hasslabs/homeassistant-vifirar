@@ -71,12 +71,17 @@ en färdig guide med exempel-YAML finns i sajtens Home Assistant-sektion.
 
 ## Ikonen
 
-Home Assistant och HACS hämtar aldrig ikonen ur integrationen - de läser
-`brands.home-assistant.io/_/vifirar/icon.png`. Bilderna i `custom_components/vifirar/brand/` är
-därför två saker: det som skickats in till
-[home-assistant/brands](https://github.com/home-assistant/brands), och ett spår i repot av exakt
-vilka filer som skickades. De byggs ur sajtens egna ikoner med `node scripts/ha-brand.mjs` i
-plattformsrepot.
+Ikonen ligger i `custom_components/vifirar/brand/` (`icon.png` 256x256, `icon@2x.png` 512x512).
+Från och med **Home Assistant 2026.3** läser HA brandbilder direkt ur integrationen och låter dem gå
+före CDN:en - ingen inställning behövs, och ingen PR till
+[home-assistant/brands](https://github.com/home-assistant/brands), vars `custom_integrations`-mapp
+numera är märkt legacy.
+
+På äldre Home Assistant hämtas ikonen fortfarande från `brands.home-assistant.io`, som svarar med en
+gråruta ("icon not available") för domäner som inte skickats in dit. Uppgradera till 2026.3 eller
+senare, så syns den.
+
+Bilderna byggs ur sajtens egna ikoner med `node scripts/ha-brand.mjs` i plattformsrepot.
 
 ## Frågor och fel
 
