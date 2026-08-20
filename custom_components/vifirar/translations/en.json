@@ -3,9 +3,9 @@
     "step": {
       "user": {
         "title": "Connect your Vi firar site",
-        "description": "Your site address (e.g. {exempel}) and the API key from Settings → Home Assistant.",
+        "description": "Your site name or its full address (e.g. {exempel}), and the API key. Both are shown under Settings → Home Assistant on the site, each with a copy button.",
         "data": {
-          "url": "Site address",
+          "url": "Site name or address",
           "api_key": "API key"
         }
       },

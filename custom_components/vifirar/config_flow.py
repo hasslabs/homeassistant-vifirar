@@ -35,20 +35,38 @@ REAUTH_SCHEMA = vol.Schema({vol.Required(CONF_API_KEY): str})
 
 TIMEOUT_SECONDS = 15
 
-# Visas i formularets beskrivning via description_placeholders (se async_step_user).
-EXEMPEL_ADRESS = "https://karl-och-sara.vifirar.se"
+# Sajternas hem. Används bara för att fylla i åt den som skriver enbart sajtnamnet - en egen domän
+# skrivs ut i sin helhet och rörs aldrig.
+PLATTFORMSDOMAN = "vifirar.se"
+
+# Visas i formularets beskrivning via description_placeholders (se async_step_user). hassfest
+# tillåter inte URL:er i språkfilerna, därför en placeholder och inte en sträng i strings.json.
+EXEMPEL_ADRESS = "karl-och-sara"
 
 
 def _normalize_url(raw: str) -> tuple[str, str | None]:
-    """Returnerar (url, felkod). http:// avvisas, allt annat får https:// framför sig."""
+    """Returnerar (url, felkod).
+
+    Adressen är det som ROUTAR anropet: nyckeln bor i sajtens egen databas och går inte att slå upp
+    utan att veta vilken sajt det gäller. Den kan alltså inte utgå - men den ska tåla att skrivas
+    som man tänker på den. Alla tre formerna nedan ger samma sak:
+
+        carl-och-julia
+        carl-och-julia.vifirar.se
+        https://carl-och-julia.vifirar.se
+
+    Den första var tidigare en fälla: den blev "https://carl-och-julia", ett värdnamn som inte finns,
+    och felet såg ut som en trasig nyckel. Egna domäner (som innehåller en punkt) rörs inte.
+    """
     url = (raw or "").strip().rstrip("/")
     if url.startswith("http://"):
         # API-nyckeln skickas som Bearer-token i klartext over http:// - varna i stallet
         # for att tyst acceptera och lacka nyckeln till varje natverk pa vagen.
         return url, "insecure_url"
-    if not url.startswith("https://"):
-        url = "https://" + url
-    return url, None
+    host = url[len("https://"):] if url.startswith("https://") else url
+    if host and "." not in host.split("/")[0]:
+        host = f"{host}.{PLATTFORMSDOMAN}"
+    return "https://" + host, None
 
 
 class VifirarConfigFlow(ConfigFlow, domain=DOMAIN):
